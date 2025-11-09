@@ -18,7 +18,7 @@ game_state = {
   }
 
 def process_command(game_state: dict, command: str) -> None:
-    #парсер ввода и обработка действия
+    """Парсер ввода и обработка действия"""
     parts = normalize(command)
     if not parts:
         return

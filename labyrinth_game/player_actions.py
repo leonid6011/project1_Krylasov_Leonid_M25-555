@@ -3,6 +3,7 @@ from .utils import describe_current_room, random_event
 
 
 def show_inventory(game_state: dict) -> None:
+    """Показываем содержимое инвенторя игрока"""
     inv = game_state["player_inventory"]
     if inv:
         print("Ваш инвентарь:", ", ".join(inv))
@@ -10,6 +11,7 @@ def show_inventory(game_state: dict) -> None:
         print("Инвентарь пуст.")
 
 def get_input(promt: str = "> ") -> str:
+    """Взаимодействи с пользователем"""
     try:
         return input(promt)
     except (KeyboardInterrupt, EOFError):
@@ -17,6 +19,7 @@ def get_input(promt: str = "> ") -> str:
         return "quit"
 
 def move_player(game_state: dict, direction: str) -> None:
+    """Перемещение между комнатами по направлениям"""
     #перемещение между комнатами по направлению (north/south/east/west)
     current = game_state["current_room"]
     exits = ROOMS[current].get("exits", {})
@@ -42,6 +45,7 @@ def move_player(game_state: dict, direction: str) -> None:
     random_event(game_state)
 
 def take_item(game_state: dict, item_name: str) -> None:
+    """Поднятие предмета в текущей комнате"""
     #нельзя поднимать сундук
     if item_name == "treasure_chest":
         print("Вы не можете поднять сундук, он слишком тяжёлый.")
@@ -60,7 +64,7 @@ def take_item(game_state: dict, item_name: str) -> None:
     
 
 def use_item(game_state: dict, item_name: str) -> None:
-    #Используем предмет из инвенторя
+    """Используем предмет из инвентаря"""
     inv = game_state["player_inventory"]
     if item_name not in inv:
         print("У вас нет такого предмета.")

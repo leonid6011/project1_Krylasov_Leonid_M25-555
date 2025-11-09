@@ -1,16 +1,18 @@
 import math
 
-from .constants import ROOMS
+from .constants import EVENT_PROBABILITY, RANDOM_EVENT, ROOMS
 
 
 def normalize(s: str) -> list[str]:
+    """Преобразоваине команд"""
     return s.strip().lower().split() if s.strip() else []
 
 def room_name(key: str) -> str:
+    """Для вывода названий комнат"""
     return key.replace("_", " ").title()
 
 def describe_current_room(game_state: dict) -> None:
-    #полное описание текущей комнаты и подсказки
+    """Полное описание текущей комнаты и подсказки"""
     key = game_state["current_room"]
     room = ROOMS[key]
 
@@ -31,7 +33,7 @@ def describe_current_room(game_state: dict) -> None:
         print("Кажется, здесь есть загадка (используйте команду solve)")
     
 def solve_puzzle(game_state: dict) -> None:
-    #решение обычной загадки в текущей комнате
+    """Решение обычной загадки в текущей комнате"""
     room_key = game_state["current_room"]
     room = ROOMS[room_key]
     puzzle = room.get("puzzle")
@@ -66,7 +68,7 @@ def solve_puzzle(game_state: dict) -> None:
             trigger_trap(game_state)
 
 def attempt_open_treasure(game_state: dict) -> None:
-    #открыть сундук ключем или кодом
+    """открыть сундук ключем или кодом"""
     room_key = game_state["current_room"]
     room = ROOMS[room_key]
 
@@ -113,19 +115,19 @@ def attempt_open_treasure(game_state: dict) -> None:
         print("Код неверный.")
 
 def show_help(commands: dict) -> None:
-    #вывод доступных комманд
-    print("\nДоступные комманды:")
+    """Вывод доступных команд"""
+    print("\nДоступные команды:")
     for cmd, desc in commands.items():
         print(f"{cmd:<16} - {desc}")    
 
 def pseudo_random(seed: int, modulo: int) -> int:
-    #детерменированный псевдослучайный генератор на синусе
+    """Детерменированный псевдослучайный генератор на синусе"""
     x = math.sin(seed * 12.9898) * 43758.5453
     frac = x - math.floor(x)
     return int(frac * modulo)
 
 def trigger_trap(game_state: dict) -> None:
-    #срабатывание ловушки
+    """Срабатывание ловушки"""
     print("Ловушка активирована! Пол стал дрожжать...")
     inv = game_state["player_inventory"]
 
@@ -136,7 +138,7 @@ def trigger_trap(game_state: dict) -> None:
         print(f"Вы теряете предмет: {lost}.")
     else:
         #пустой инвентарь - шанс поражения в игре
-        roll = pseudo_random(game_state["steps_taken"], 10)
+        roll = pseudo_random(game_state["steps_taken"], EVENT_PROBABILITY)
         if  roll < 3:
             print("Удар пришелся слишком сильно... Вы падаете в пропасть. " \
             "Игра окончена.")
@@ -145,13 +147,13 @@ def trigger_trap(game_state: dict) -> None:
             print("Вы едва удержались на ногах и уцелели.")
 
 def random_event(game_state: dict) -> None:
-    #небольшие случайные события после перемещения игрока
+    """Небольшие случайные события после перемещения игрока"""
     #сначала определяем будет ли событие вообще
-    if pseudo_random(game_state["steps_taken"], 10) != 0:
+    if pseudo_random(game_state["steps_taken"], EVENT_PROBABILITY) != 0:
         return
     
     #выбираем одно из трех событий
-    pick = pseudo_random(game_state["steps_taken"] + 42, 3)
+    pick = pseudo_random(game_state["steps_taken"] + 42, RANDOM_EVENT)
     room_key = game_state["current_room"]
     room = ROOMS[room_key]
     inv = game_state["player_inventory"]
