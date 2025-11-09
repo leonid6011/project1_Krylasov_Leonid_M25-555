@@ -31,41 +31,6 @@ def describe_current_room(game_state: dict) -> None:
     #загадка
     if room["puzzle"] is not None:
         print("Кажется, здесь есть загадка (используйте команду solve)")
-    
-def solve_puzzle(game_state: dict) -> None:
-    """Решение обычной загадки в текущей комнате"""
-    room_key = game_state["current_room"]
-    room = ROOMS[room_key]
-    puzzle = room.get("puzzle")
-
-    if not puzzle:
-        print("Загадки здесь нет.")
-        return
-    
-    question, correct = puzzle
-    print(question)
-    user = input("Ваш ответ: ").strip().lower()
-
-    #допускаем альтернативный вариант ответа
-    if user == str(correct).lower() or (str(correct) == "10" and user == "десять"):
-        print("Верно! Вы справились с загадкой.")
-        room["puzzle"] = None
-
-        #разная награда в зависимости от комнаты
-        if room_key == "hall":
-            reward = "coin_hall"
-        elif room_key == "library":
-            reward = "coin_library"
-        elif room_key == "trap_room":
-            reward = "coin_trap_room"
-
-        game_state["player_inventory"].append(reward)
-        print(f"Вы получили {reward}!")
-    else:
-        print("Неверно. Попробуйте снова.")
-        #если это ловушка то активируем её
-        if room_key == "trap_room":
-            trigger_trap(game_state)
 
 def attempt_open_treasure(game_state: dict) -> None:
     """открыть сундук ключем или кодом"""
@@ -173,4 +138,39 @@ def random_event(game_state: dict) -> None:
          #3 сценарий - проверка ловушки при отсутсвии факела
          if room_key == "trap_room" and "torch" not in inv:
             print("Опасно без света в этой комнате!")
+            trigger_trap(game_state)
+
+def solve_puzzle(game_state: dict) -> None:
+    """Решение обычной загадки в текущей комнате"""
+    room_key = game_state["current_room"]
+    room = ROOMS[room_key]
+    puzzle = room.get("puzzle")
+
+    if not puzzle:
+        print("Загадки здесь нет.")
+        return
+    
+    question, correct = puzzle
+    print(question)
+    user = input("Ваш ответ: ").strip().lower()
+
+    #допускаем альтернативный вариант ответа
+    if user == str(correct).lower() or (str(correct) == "10" and user == "десять"):
+        print("Верно! Вы справились с загадкой.")
+        room["puzzle"] = None
+
+        #разная награда в зависимости от комнаты
+        if room_key == "hall":
+            reward = "coin_hall"
+        elif room_key == "library":
+            reward = "coin_library"
+        elif room_key == "trap_room":
+            reward = "coin_trap_room"
+
+        game_state["player_inventory"].append(reward)
+        print(f"Вы получили {reward}!")
+    else:
+        print("Неверно. Попробуйте снова.")
+        #если это ловушка то активируем её
+        if room_key == "trap_room":
             trigger_trap(game_state)

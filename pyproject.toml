@@ -2,7 +2,7 @@
 name = "project1-krylasov-leonid-m25-555"
 version = "0.1.0"
 description = "Игра: Лабиринт скоровищ"
-authors = ["Leonid Krylasov leonid.krylasov@yandex.ru"]
+authors = ["Leonid Krylasov <leonid.krylasov@yandex.ru>"]
 readme = "README.md"
 packages = [
     { include = "labyrinth_game"}

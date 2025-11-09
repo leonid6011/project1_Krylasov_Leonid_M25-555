@@ -2,7 +2,7 @@ install:
 	poetry install
 
 project:
-	poetry run project
+	PYTHONUTF8=1 LC_ALL=C.UTF-8 LANG=C.UTF-8 PYTHONIOENCODING=utf-8 poetry run project
 
 build:
 	poetry build
