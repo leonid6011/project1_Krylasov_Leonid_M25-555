@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from .constants import COMMANDS
 from .player_actions import get_input, move_player, show_inventory, take_item, use_item
 from .utils import (
     attempt_open_treasure,
@@ -24,6 +25,11 @@ def process_command(game_state: dict, command: str) -> None:
     
     cmd = parts[0]
     arg = parts[1] if len(parts) > 1 else ""
+    
+    #возможность ходить просто направлениям
+    if command in ["north", "south", "east", "west"]:
+        move_player(game_state, command)
+        return
 
     match cmd:
         case "look":
@@ -51,7 +57,7 @@ def process_command(game_state: dict, command: str) -> None:
             else:
                 solve_puzzle(game_state)
         case "help":
-            show_help()
+            show_help(COMMANDS)
         case "quit" | "exit":
             game_state["game_over"] = True
         case _:
