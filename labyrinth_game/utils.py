@@ -162,7 +162,7 @@ def random_event(game_state: dict) -> None:
         room.setdefault("items", []).append("coin")
 
     elif pick == 1:
-        # 2 сценарий  - шорох
+        # 2 сценарий - шорох
         print("Слышен странный шорох где-то рядом...")
         if "sword" in inv:
             print("Вы крепче сжимаете меч - шорох отступает.")
