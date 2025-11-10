@@ -165,7 +165,7 @@ def solve_puzzle(game_state: dict) -> None:
         elif room_key == "library":
             reward = "coin_library"
         elif room_key == "trap_room":
-            reward = "coin_trap_room"
+            reward = "treasure_key"
 
         game_state["player_inventory"].append(reward)
         print(f"Вы получили {reward}!")
