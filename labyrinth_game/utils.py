@@ -62,7 +62,7 @@ def attempt_open_treasure(game_state: dict) -> None:
         print("Сундук заперт, и кода тут не найти.")
         return
     
-    choice = input("Сундуе запрет... Ввести код? (да/нет) ").strip().lower()
+    choice = input("Сундук запрет... Ввести код? (да/нет) ").strip().lower()
     if choice not in {"да", "yes", "y"}:
         print("Вы отступаете от сундука.")
         return
