@@ -1,10 +1,10 @@
 import math
 
-from .constants import EVENT_PROBABILITY, RANDOM_EVENT, ROOMS
+from .constants import EVENT_PROBABILITY, RANDOM_EVENT, RANDOM_SEED_OFFSET, ROOMS
 
 
 def normalize(s: str) -> list[str]:
-    """Преобразоваине команд"""
+    """Преобразование команд"""
     return s.strip().lower().split() if s.strip() else []
 
 def room_name(key: str) -> str:
@@ -33,7 +33,7 @@ def describe_current_room(game_state: dict) -> None:
         print("Кажется, здесь есть загадка (используйте команду solve)")
 
 def attempt_open_treasure(game_state: dict) -> None:
-    """открыть сундук ключем или кодом"""
+    """Открыть сундук ключем или кодом"""
     room_key = game_state["current_room"]
     room = ROOMS[room_key]
 
@@ -118,7 +118,7 @@ def random_event(game_state: dict) -> None:
         return
     
     #выбираем одно из трех событий
-    pick = pseudo_random(game_state["steps_taken"] + 42, RANDOM_EVENT)
+    pick = pseudo_random(game_state["steps_taken"] + RANDOM_SEED_OFFSET, RANDOM_EVENT)
     room_key = game_state["current_room"]
     room = ROOMS[room_key]
     inv = game_state["player_inventory"]
@@ -135,7 +135,7 @@ def random_event(game_state: dict) -> None:
             print("Вы крепче сжимаете меч - шорох отступает.")
     
     else:
-         #3 сценарий - проверка ловушки при отсутсвии факела
+         #3 сценарий - проверка ловушки при отсутствии факела
          if room_key == "trap_room" and "torch" not in inv:
             print("Опасно без света в этой комнате!")
             trigger_trap(game_state)

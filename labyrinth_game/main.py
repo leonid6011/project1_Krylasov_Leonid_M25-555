@@ -61,7 +61,7 @@ def process_command(game_state: dict, command: str) -> None:
         case "quit" | "exit":
             game_state["game_over"] = True
         case _:
-            print("Неизвестная комманда.")
+            print("Неизвестная команда.")
 
 def main() -> None:
     print("Добро пожаловать в Лабиринт сокровищ!")

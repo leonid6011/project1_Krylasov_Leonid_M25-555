@@ -75,3 +75,4 @@ COMMANDS = {
 
 EVENT_PROBABILITY = 10  # вероятность случайного события
 RANDOM_EVENT = 3        # вероятность одного из 3 событий
+RANDOM_SEED_OFFSET = 42 # смещение для выбора события

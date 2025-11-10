@@ -3,7 +3,7 @@ from .utils import describe_current_room, random_event
 
 
 def show_inventory(game_state: dict) -> None:
-    """Показываем содержимое инвенторя игрока"""
+    """Показываем содержимое инвентаря игрока"""
     inv = game_state["player_inventory"]
     if inv:
         print("Ваш инвентарь:", ", ".join(inv))
@@ -11,7 +11,7 @@ def show_inventory(game_state: dict) -> None:
         print("Инвентарь пуст.")
 
 def get_input(promt: str = "> ") -> str:
-    """Взаимодействи с пользователем"""
+    """Взаимодействие с пользователем"""
     try:
         return input(promt)
     except (KeyboardInterrupt, EOFError):
