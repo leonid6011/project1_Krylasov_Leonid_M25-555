@@ -11,12 +11,11 @@ def show_inventory(game_state: dict) -> None:
         print("Инвентарь пуст.")
 
 def get_input(promt: str = "> ") -> str:
-    """Взаимодействие с пользователем"""
-    try:
-        return input(promt)
-    except (KeyboardInterrupt, EOFError):
-        print("\nВыход из игры!")
-        return "quit"
+    """Получение команды игрока"""
+    user_input = input(promt)
+    if not user_input:
+        return ""
+    return user_input.strip().lower()
 
 def move_player(game_state: dict, direction: str) -> None:
     """Перемещение между комнатами по направлениям"""
